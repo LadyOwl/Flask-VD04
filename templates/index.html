@@ -2,44 +2,181 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Текущее время</title>
+    <title>Неоновые часы с падающими звёздами</title>
     <style>
+
         body {
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            margin-top: 100px;
-            background-color: lavender; /* Светло-лавандовый фон */
-            color: midnightblue; /* Тёмно-синий основной текст */
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .container {
+
+
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+
+        .shooting-star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
             background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px deepskyblue; /* Яркая синяя тень */
-            display: inline-block;
-            border: 2px solid mediumslateblue; /* Фиолетовая рамка */
+            border-radius: 50%;
+            box-shadow:
+                0 0 6px cyan,
+                0 0 12px cyan,
+                0 0 18px cyan;
+            opacity: 0;
+            animation: shoot 3s ease-in-out infinite;
+            transform: translateY(-100vh);
         }
+
+
+        .shooting-star.purple {
+            box-shadow:
+                0 0 6px mediumpurple,
+                0 0 12px mediumpurple,
+                0 0 18px mediumpurple;
+        }
+
+
+        @keyframes shoot {
+            0% {
+                opacity: 0;
+                transform: translateX(-10px) translateY(-10px);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100vw) translateY(100vh);
+            }
+        }
+
+
+        .container {
+            position: relative;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 60px 50px;
+            border-radius: 20px;
+            box-shadow:
+                0 0 15px cyan,
+                0 0 30px mediumpurple,
+                0 0 50px rgba(138, 43, 226, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            max-width: 700px;
+            width: 85%;
+            backdrop-filter: blur(5px);
+            text-align: center;
+        }
+
+
         h1 {
-            color: darkslateblue; /* Глубокий фиолетово-синий */
-            margin-bottom: 10px;
-        }
-        .time {
             font-size: 2.2em;
-            color: Blue; /* Насыщенный фиолетовый акцент */
-            font-weight: bold;
+            color: cyan;
+            margin-bottom: 20px;
+            text-shadow:
+                0 0 10px cyan,
+                0 0 20px cyan,
+                0 0 30px deepskyblue;
+            font-weight: 600;
         }
-        /* Добавим лёгкое свечение вокруг времени */
-        .time::before {
-            content: '🕐';
-            margin-right: 10px;
-            font-size: 1.5em;
+
+
+        .time {
+            font-size: 3em;
+            color: #fff;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow:
+                0 0 10px cyan,
+                0 0 20px cyan,
+                0 0 40px cyan,
+                0 0 60px mediumpurple,
+                0 0 80px mediumpurple;
+            white-space: nowrap;
+        }
+
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow:
+                    0 0 10px cyan,
+                    0 0 20px cyan,
+                    0 0 40px cyan,
+                    0 0 60px mediumpurple,
+                    0 0 80px mediumpurple;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+
+        .time {
+            animation: flicker 3s infinite;
         }
     </style>
 </head>
 <body>
+
+
+    <script>
+        
+        for (let i = 0; i < 20; i++) {
+            const star = document.createElement('div');
+            star.classList.add('shooting-star');
+
+
+            if (i % 3 === 0) {
+                star.classList.add('purple');
+            }
+
+
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+
+            star.style.animationDelay = Math.random() * 5 + 's';
+
+
+            document.body.appendChild(star);
+        }
+    </script>
+
+
     <div class="container">
-        <h1>Текущие дата и время</h1>
-        <p class="time">{{ current_time }}</p>
+        <h1>🌌 Текущие дата и время</h1>
+        <p class="time" id="clock"></p>
     </div>
+
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const options = {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            const timeString = now.toLocaleString('ru-RU', options);
+            document.getElementById('clock').textContent = timeString;
+        }
+
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+
 </body>
 </html>
