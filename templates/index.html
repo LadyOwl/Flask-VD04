@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Текущее время</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin-top: 100px;
+            background-color: lavender; /* Светло-лавандовый фон */
+            color: midnightblue; /* Тёмно-синий основной текст */
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px deepskyblue; /* Яркая синяя тень */
+            display: inline-block;
+            border: 2px solid mediumslateblue; /* Фиолетовая рамка */
+        }
+        h1 {
+            color: darkslateblue; /* Глубокий фиолетово-синий */
+            margin-bottom: 10px;
+        }
+        .time {
+            font-size: 2.2em;
+            color: Blue; /* Насыщенный фиолетовый акцент */
+            font-weight: bold;
+        }
+        /* Добавим лёгкое свечение вокруг времени */
+        .time::before {
+            content: '🕐';
+            margin-right: 10px;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Текущие дата и время</h1>
+        <p class="time">{{ current_time }}</p>
+    </div>
+</body>
+</html>
